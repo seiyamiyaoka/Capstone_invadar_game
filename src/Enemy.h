@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include <vector>
 #include "Missile.h"
+#include <memory>
 
 class Enemy
 {
@@ -11,7 +12,7 @@ class Enemy
     Enemy(int x, int y) : x(x), y(y), missile{}{}
     float x;
     float y;
-    static void Update(std::vector<Enemy> &enemies);
+    static void Update(std::vector<std::unique_ptr<Enemy>> &enemies);
     void dead();
     SDL_Point point;
     bool alive{true};

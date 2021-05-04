@@ -3,14 +3,19 @@
 #include "game.h"
 #include "Score.h"
 #include "SDL.h"
+#include <memory>
 
 Game::Game(std::size_t grid_width, std::size_t grid_heigt) : player(grid_width, grid_heigt) {
   for(auto i = 0; i < grid_width / 2; i++)
   {
-    Enemy enemy{i * 2, 2};
-    enemy.point.x = enemy.x;
-    enemies.emplace_back(enemy);
+    // Enemy enemy{i * 2, 2};
+    // enemy.point.x = enemy.x;
+    enemies.emplace_back(std::make_unique<Enemy>(i*2, 2));
   }
+}
+Game::~Game()
+{
+  std::cout << "削除" << std::endl;
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration)

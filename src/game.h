@@ -7,17 +7,19 @@
 #include "renderer.h"
 #include "Player.h"
 #include "Enemy.h"
+#include <memory>
 
 class Game
 {
   public:
     Game(std::size_t grid_width, std::size_t grid_height
     );
+    ~Game();
     void Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration);
     void Update();
   private:
     Player player;
-    std::vector<Enemy> enemies;
+    std::vector<std::unique_ptr<Enemy>> enemies;
 };
 
 #endif

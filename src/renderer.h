@@ -12,7 +12,7 @@ class Renderer
   public:
     Renderer(const std::size_t screen_width, const std::size_t screen_height, const std::size_t grid_width, const std::size_t grid_height);
     ~Renderer();
-    void Render(Player& player, std::vector<Enemy>& enemies);
+    void Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemies);
     void FinishRender();
     void UpdateWindowTitle(int score, int fps);
     bool loadMedia();

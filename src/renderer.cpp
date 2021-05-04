@@ -48,7 +48,7 @@ Renderer::~Renderer()
   SDL_Quit();
 }
 
-void Renderer::Render(Player& player, std::vector<Enemy>& enemies)
+void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemies)
 {
   // blockを埋める
   // 20 * 20をうめている
@@ -81,14 +81,14 @@ void Renderer::Render(Player& player, std::vector<Enemy>& enemies)
   };
 
   // 敵の表示
-  for(auto enemy : enemies)
+  for(const auto& enemy : enemies)
   {
     // block.wをかけないと該当場所に配置されない
     // 単位あたりの数みたいなもの
     // std::cout << enemy.y << std::endl;
     Checker target_enemy {
-      static_cast<int>(enemy.x * block.w),
-      static_cast<int>(enemy.y),
+      static_cast<int>(enemy->x * block.w),
+      static_cast<int>(enemy->y),
       static_cast<int>(block.w),
       static_cast<int>(block.h)
     };
@@ -101,34 +101,34 @@ void Renderer::Render(Player& player, std::vector<Enemy>& enemies)
     }
 
     // NOTE: 敵が生きているか確認
-    if(enemy.alive) {
+    if(enemy->alive) {
       SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x1A, 0xCC, 0xFF);
     } else {
       SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
     }
-    block.x = enemy.x * block.w;
-    block.y = enemy.y;
+    block.x = enemy->x * block.w;
+    block.y = enemy->y;
     SDL_RenderFillRect(sdl_renderer, &block);
   }
 
-  for(Enemy& enemy : enemies)
+  for(const auto& enemy : enemies)
   {
-    if(enemy.getMissile().isAttack()) {
+    if(enemy->getMissile().isAttack()) {
       SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xAA, 0xCC, 0xFF);
-      Missile& enemyMissile = enemy.getMissile();
+      Missile& enemyMissile = enemy->getMissile();
       block.x = enemyMissile.x * block.w;
-      block.y = (enemy.y * block.h) - enemyMissile.y;
+      block.y = (enemy->y * block.h) - enemyMissile.y;
     }
 
     // 微修正する
-    Missile& enemyMissile = enemy.getMissile();
+    Missile& enemyMissile = enemy->getMissile();
     Checker target_enemy_missile {
       static_cast<int>(enemyMissile.x * block.w),
       static_cast<int>((enemyMissile.y * block.h) / 2),
       static_cast<int>(block.w),
       static_cast<int>(block.h)
     };
-    std::cout << "敵ミサイルのA座標: (" << target_enemy_missile.x << ", " << target_enemy_missile.y << ")" << "敵ミサイルのB座標: (" << target_enemy_missile.x + target_enemy_missile.w << ", " << target_enemy_missile.y + target_enemy_missile.h << ")"<< std::endl;
+    // std::cout << "敵ミサイルのA座標: (" << target_enemy_missile.x << ", " << target_enemy_missile.y << ")" << "敵ミサイルのB座標: (" << target_enemy_missile.x + target_enemy_missile.w << ", " << target_enemy_missile.y + target_enemy_missile.h << ")"<< std::endl;
 
     Collision collision_enemy_missile_and_player(target_enemy_missile, target_player);
     if(collision_enemy_missile_and_player.isCollid()) {
@@ -157,11 +157,11 @@ void Renderer::Render(Player& player, std::vector<Enemy>& enemies)
     };
 
     // 敵とミサイルの衝突をチェックしている
-    for(Enemy& enemy : enemies)
+    for(const auto& enemy : enemies)
     {
       Checker target_enemy {
-        static_cast<int>(enemy.x * block.w),
-        static_cast<int>(enemy.y),
+        static_cast<int>(enemy->x * block.w),
+        static_cast<int>(enemy->y),
         static_cast<int>(block.w),
         static_cast<int>(block.h)
       };
@@ -172,7 +172,7 @@ void Renderer::Render(Player& player, std::vector<Enemy>& enemies)
         // std::cout << "衝突したよ" << std::endl;
         // std::cout << "衝突 x: " << checker_b.x << "衝突 y: " << checker_b.y << std::endl;
         // std::cout << "衝突したの敵A座標: (" << checker_b.x << ", " << checker_b.y << ")" << "敵のB座標: (" << checker_b.x + checker_b.w << ", " << checker_b.y + checker_b.h << ")"<< std::endl;
-        enemy.dead();
+        enemy->dead();
         player.score->CountScore();
       }
     }

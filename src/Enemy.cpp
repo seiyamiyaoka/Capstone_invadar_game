@@ -1,16 +1,18 @@
 #include "Enemy.h"
 #include <iostream>
-void Enemy::Update(std::vector<Enemy>&enemies)
+#include <memory>
+
+void Enemy::Update(std::vector<std::unique_ptr<Enemy>> &enemies)
 {
-  for(auto &enemy : enemies)
+  for(const auto &enemy : enemies)
   {
-    enemy.y = enemy.y + 1;
+    enemy->y = enemy->y + 1;
     // ミサイルの座標を下向きに更新
-    if(enemy.getMissile().isAttack())
+    if(enemy->getMissile().isAttack())
     {
-      enemy.getMissile().Update(Missile::Direction::down);
+      enemy->getMissile().Update(Missile::Direction::down);
     } else {
-      enemy.getMissile().doAttack(enemy.x, enemy.y);
+      enemy->getMissile().doAttack(enemy->x, enemy->y);
     }
   }
 }
