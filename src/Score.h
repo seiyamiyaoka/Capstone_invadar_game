@@ -2,6 +2,7 @@
 #define SCORE_H
 
 #include <iostream>
+#include <memory>
 
 class Score
 {

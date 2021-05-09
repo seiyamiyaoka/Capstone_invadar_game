@@ -48,7 +48,7 @@ Renderer::~Renderer()
   SDL_Quit();
 }
 
-void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemies)
+void Renderer::Render(Player& player, std::vector<std::shared_ptr<Enemy>>& enemies)
 {
   // blockを埋める
   // 20 * 20をうめている
@@ -60,6 +60,11 @@ void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemi
   // 初期化状態背景をを黒で設定
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
+  
+  if(!player.alive)
+  {
+    SDL_DestroyRenderer(sdl_renderer);
+  }
 
   // playerを表示
   block.x = player.x * block.w;
@@ -67,7 +72,6 @@ void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemi
   if(player.alive) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
   } else {
-    std::cout << "player死亡" << std::endl;
     SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   }
 
@@ -96,7 +100,7 @@ void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemi
     Collision collision(target_player, target_enemy);
     if(collision.isCollid())
     {
-      std::cout << "あたったよ=================" << std::endl;
+      std::cout << "HIT=================" << std::endl;
       player.dead();
     }
 
@@ -117,18 +121,17 @@ void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemi
       SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xAA, 0xCC, 0xFF);
       Missile& enemyMissile = enemy->getMissile();
       block.x = enemyMissile.x * block.w;
-      block.y = (enemy->y * block.h) - enemyMissile.y;
+      block.y = (enemy->y * block.h) - (enemyMissile.y * block.h);
     }
 
     // 微修正する
     Missile& enemyMissile = enemy->getMissile();
     Checker target_enemy_missile {
-      static_cast<int>(enemyMissile.x * block.w),
-      static_cast<int>((enemyMissile.y * block.h) / 2),
+      static_cast<int>(block.x),
+      static_cast<int>(block.y),
       static_cast<int>(block.w),
       static_cast<int>(block.h)
     };
-    // std::cout << "敵ミサイルのA座標: (" << target_enemy_missile.x << ", " << target_enemy_missile.y << ")" << "敵ミサイルのB座標: (" << target_enemy_missile.x + target_enemy_missile.w << ", " << target_enemy_missile.y + target_enemy_missile.h << ")"<< std::endl;
 
     Collision collision_enemy_missile_and_player(target_enemy_missile, target_player);
     if(collision_enemy_missile_and_player.isCollid()) {
@@ -167,7 +170,7 @@ void Renderer::Render(Player& player, std::vector<std::unique_ptr<Enemy>>& enemi
       };
       // 敵とミサイルの衝突をチェックしている
       Collision collision(target_missile, target_enemy);
-      if (collision.isCollid()) {
+      if (collision.isCollid() && enemy->alive) {
         // std::cout << "ミサイルのA座標: (" << checker_a.x << ", " << checker_a.y << ")" << "ミサイルのB座標: (" << checker_a.x + checker_a.w << ", " << checker_a.y + checker_a.h << ")"<< std::endl;
         // std::cout << "衝突したよ" << std::endl;
         // std::cout << "衝突 x: " << checker_b.x << "衝突 y: " << checker_b.y << std::endl;
