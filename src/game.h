@@ -2,12 +2,11 @@
 #define GAME_H
 
 #include <vector>
-#include "SDL.h"
+#include <memory>
 #include "controller.h"
 #include "renderer.h"
 #include "Player.h"
 #include "Enemy.h"
-#include <memory>
 #include "Missile.h"
 
 class Game

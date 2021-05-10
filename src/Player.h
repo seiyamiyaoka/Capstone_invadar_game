@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SDL_image.h>
 #include <SDL.h>
 #include <string>
 #include "Missile.h"
@@ -14,20 +13,20 @@ class Player
     Player(int grid_width, int grid_height) :
            grid_width(grid_width), grid_height(grid_height), x{static_cast<float>(grid_width / 2)},y{static_cast<float>(grid_height - 1)}, missile{}{}
     void setTexture(SDL_Texture* texture);
-    Direction direction = Direction::kLeft;
+    void setScore(Score* score);
     void Update();
     void Attack();
-    SDL_Texture* getTexture();
-    float speed{0.1f};
+    Direction direction = Direction::kLeft;
     int getX();
     int getY();
+    float speed{0.1f};
     float x{16.0f};
     float y;
     void dead();
     bool alive{true};
     Missile& getMissile();
+    SDL_Texture* getTexture();
     Score* score;
-    void setScore(Score* score);
   private:
     SDL_Texture* _texture;
     int grid_width;

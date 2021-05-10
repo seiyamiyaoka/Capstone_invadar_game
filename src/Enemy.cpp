@@ -1,6 +1,4 @@
 #include <iostream>
-#include <memory>
-#include <vector>
 #include <future>
 #include <mutex>
 #include <algorithm>

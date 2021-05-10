@@ -1,14 +1,12 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-
 struct Checker {
   int x;
   int y;
   int w;
   int h;
 };
-
 class Collision
 {
   public:

@@ -1,10 +1,11 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <vector>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include "Player.h"
 #include "Enemy.h"
-#include "SDL.h"
-#include <vector>
 
 class Missile;
 class Renderer
@@ -20,6 +21,7 @@ class Renderer
     SDL_Window *sdl_window;
     SDL_Renderer *sdl_renderer;
     SDL_Surface *finishPage = NULL;
+    SDL_Surface *messageSurface = NULL;
 
     const std::size_t screen_width;
     const std::size_t screen_height;

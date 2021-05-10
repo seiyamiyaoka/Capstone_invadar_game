@@ -1,10 +1,7 @@
 #include <iostream>
-#include <memory>
 #include "game.h"
 #include "Score.h"
 #include "SDL.h"
-#include <memory>
-#include "Player.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_heigt) : player(new Player(grid_width, grid_heigt)) {
   for(auto i = 0; i < grid_width / 2; i++)
