@@ -35,6 +35,7 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
   int frame_count = 0;
   bool running = true;
   std::thread t1 = std::thread(&Missile::Simurate, enemies);
+  t1.detach();
 
   player->setScore(gameScore);
   while(running)
@@ -57,8 +58,6 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
       renderer.UpdateWindowTitle(player->score->getScore(), frame_count);
       frame_count = 0;
       title_timestamp = frame_end;
-      // if(!player->alive)
-      //   running = false;
     }
     if(frame_duration < target_frame_duration)
     {

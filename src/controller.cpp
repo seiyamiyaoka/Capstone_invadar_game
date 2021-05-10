@@ -14,7 +14,6 @@ void Controller::HandleInput(bool &running, Player &player) const
   SDL_Event e;
   while(SDL_PollEvent(&e)) {
     if(e.type == SDL_QUIT) {
-      // 参照を変更している
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym)
@@ -27,7 +26,7 @@ void Controller::HandleInput(bool &running, Player &player) const
           break;
         case SDLK_SEMICOLON:
           if(player.alive) {
-            std::cout << "発射!" << std::endl;
+            std::cout << "Fire!!!!!" << std::endl;
             player.getMissile().doAttack(player.x, player.y);
           }
           break;

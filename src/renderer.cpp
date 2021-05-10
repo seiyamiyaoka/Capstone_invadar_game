@@ -60,7 +60,7 @@ void Renderer::Render(Player& player, std::vector<std::shared_ptr<Enemy>>& enemi
   // 初期化状態背景をを黒で設定
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
-  
+
   if(!player.alive)
   {
     TTF_Init();
@@ -70,7 +70,7 @@ void Renderer::Render(Player& player, std::vector<std::shared_ptr<Enemy>>& enemi
     if(verdanaFont) {
       SDL_Color textColor = { 255, 255, 255, 255 };
       std::stringstream s;
-      s << "result: " << player.score->getScore() << ".Retry press under score!";
+      s << "result: " << player.score->getScore() << ". Retry press under score!";
       SDL_Surface *textSurface = TTF_RenderText_Solid(verdanaFont, s.str().c_str(), textColor);
 
       if(textSurface == NULL)
@@ -171,7 +171,6 @@ void Renderer::Render(Player& player, std::vector<std::shared_ptr<Enemy>>& enemi
     SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x7A, 0xCC, 0xFF);
     Missile& playerMissile = player.getMissile();
     block.x = playerMissile.x * block.w;
-    // std::cout << "block height is: " << player.y << std::endl;
     // block.h == 20
     // player.h == 31
     // 620 - 20 = 600
