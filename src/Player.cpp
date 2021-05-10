@@ -27,8 +27,6 @@ void Player::Update()
       break;
   }
   x = fmod(x + grid_width, grid_width);
-  std::cout << "call?: " << x <<std::endl;
-  // 画面が端に行った時に移動させたかったらmodする
 }
 
 void Player::dead()
