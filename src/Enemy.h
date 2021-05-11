@@ -15,7 +15,6 @@ class Enemy
     float y;
     bool alive{true};
     void dead();
-    SDL_Point point;
     Missile& getMissile();
   private:
     Missile missile;

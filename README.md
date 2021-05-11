@@ -64,14 +64,83 @@ The function is
 ```
 
 
-- cmakeにsdlはあるがsdl_imageはないのでセット
-- includeはヘッダーファイルをセット うまく動かないから却下
-- 初期ループは既存のやつを参考にする
-- prac_sdlをそれぞれ要素の分解してheaderとかつくって同じように動くようにする
-- 初回配置場所変更
-- 敵をドットで出現
-- 敵を移動
-- 自機が小さいドットを発射できる
-- 当たり判定導入
-- スコア導入
-- 当たり判定 http://lazyfoo.net/tutorials/SDL/27_collision_detection/index.php
+## class structure
+
+* Game class
+  - initializer
+  - destructure
+  - Run
+  - Update
+* Controller class
+  - HandleInput
+  - ChangeDirection
+* Renderer
+  - initializer
+  - destructure
+  - Render
+  - UpdateWindowTitle
+* Player class
+  - initializer
+  - enum Direction
+  - setScore
+  - Update
+  - Attack
+  - getX
+  - getY
+  - speed
+  - x
+  - y
+  - getMissile
+  - score
+* Enemy class
+  - initializer
+  - Update
+  - x
+  - y
+  - dead
+  - getMissile
+* Missile class
+  - enum Direction
+  - initializer
+  - x
+  - y
+  - Update
+  - doAttack
+  - attackCancel
+  - isAttack
+  - Simurate
+  - attackExecute
+* Score class
+  - initializer
+  - destructure
+  - CountScore
+  - getScore
+* Collision class
+  - initializer
+  - isCollid
+
+## about each rubric point addressed.
+
+### Loops, Functions, I/O
+* The project accepts user input and processes the input.
+  - controller.cpp:16
+  - It receives user input using function provided by the library(SDL_PollEvent and reference event).
+
+### Object Oriented Programming
+* Class constructors utilize member initialization lists.
+  - Enemy.h:12
+  - The coordinates and missiles are set when Enemy is initialized.
+
+### Memory Management
+* The project uses smart pointers instead of raw pointers.
+  - game.h:22
+
+### Concurrency
+* A mutex or lock is used in the project.
+  - Missile.cpp:26
+  - Since there is a possibility to access _enemies at the same time, we get a lock and limit access.
+* A condition variable is used in the project.
+  - Missile.cpp:39
+  - Missile.cpp:14
+  - It is used to launch missiles when there are enemies and they are ready to attack.
+

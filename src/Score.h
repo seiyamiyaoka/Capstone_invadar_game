@@ -6,10 +6,10 @@
 class Score
 {
   public:
-    void CountScore();
-    int getScore();
     Score(){}
     ~Score() { std::cout << "削除されたよ" << std::endl; }
+    void CountScore();
+    int getScore();
   private:
     int _point{0};
 };

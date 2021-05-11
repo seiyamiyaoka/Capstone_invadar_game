@@ -1,16 +1,6 @@
 #include "Player.h"
 #include <iostream>
 
-void Player::setTexture(SDL_Texture* texture)
-{
-  _texture = texture;
-}
-
-SDL_Texture* Player::getTexture()
-{
-  return _texture;
-}
-
 Missile& Player::getMissile()
 {
   return missile;
