@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_definitions(-std=c++17)
 
 set(CXX_FLAGS "-Wall")
-set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}" -pthread)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -pthread")
 
 project(Capstone)
 
@@ -20,4 +20,5 @@ include_directories(include)
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(Capstone ${SOURCES})
+string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(Capstone ${SDL2_LIBRARIES} ${SDL2_TTF_LIBRARIES})

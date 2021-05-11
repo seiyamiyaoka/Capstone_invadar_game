@@ -11,7 +11,9 @@
   * Mac: - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
 * SDL2 >= 2.0.14
   * The SDL2 2.0.14 source code can be found [here](https://www.libsdl.org/download-2.0.php)
+  * ubuntu: `sudo apt-get install libsdl2-dev`
 * SDL2_ttf >= https://www.libsdl.org/projects/SDL_ttf/
+  * ubuntu: `sudo apt-get install libsdl2-ttf-dev`
   1. download sdl_ttf
   2. Unzip the zip file
   3. ./configure
