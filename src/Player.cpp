@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include <cmath>
 
 Missile& Player::getMissile()
 {
@@ -16,7 +17,7 @@ void Player::Update()
       x += speed;
       break;
   }
-  x = fmod(x + grid_width, grid_width);
+  x = std::fmod(x + grid_width, grid_width);
 }
 
 void Player::dead()
